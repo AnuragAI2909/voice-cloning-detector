@@ -1,0 +1,76 @@
+AASIST SYNTHETIC VOICE DETECTION - POC
+=======================================
+
+Model:
+AASIST
+
+Checkpoint:
+aasist/models/weights/AASIST.pth
+
+Device:
+CPU
+
+Target sample rate:
+16000 Hz
+
+Channels:
+Mono
+
+Model input:
+64600 samples
+
+Approximate analyzed duration:
+4.04 seconds
+
+Preprocessing:
+1. Load audio
+2. Convert stereo to mono
+3. Convert to float32
+4. Resample to 16 kHz
+5. Crop or repeat to 64600 samples
+
+Output:
+synthetic_probability
+bonafide_probability
+inference_time_seconds
+result
+
+Score interpretation:
+AASIST class 0 = spoof
+AASIST class 1 = bonafide
+
+synthetic_probability:
+Softmax-derived spoof/synthetic score.
+
+POC threshold:
+0.5
+
+Important:
+The 0.5 threshold is an initial POC threshold
+and has not been scientifically validated.
+
+Long audio limitation:
+The current main function analyzes only the first
+approximately 4.04 seconds of a longer recording.
+
+Short audio limitation:
+Audio shorter than 4.04 seconds is currently repeated
+to reach the required model input length.
+
+Latency:
+Approximately 0.31 seconds per 4.04-second window
+on the tested CPU hardware.
+
+Hardware:
+CPU only.
+No NVIDIA CUDA GPU available.
+
+Sample POC results:
+
+Real audio:
+Synthetic score = 0.0115
+Result = BONAFIDE / REAL
+
+Synthetic audio:
+Synthetic score = 0.9997
+Result = SYNTHETIC / SPOOF
